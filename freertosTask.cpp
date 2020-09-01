@@ -1,8 +1,4 @@
-
-
-#include <FreeRTOSWrappers/freertosTask.h>
-#include <esp_log.h>
-
+#include <freertosTask.h>
 
 namespace freeRTOS
 { 
@@ -36,6 +32,11 @@ namespace freeRTOS
         // Should only get here if task ends. Run destructor.
         p->~Task();
     }
+    
+    void Task::start() 
+    {
+        
+    }
 
     string Task::getTaskName()
     {
@@ -53,12 +54,12 @@ namespace freeRTOS
     }
 
 #if INCLUDE_vTaskSuspend  
-    bool Task::suspend() 
+    void Task::suspend() 
     {
         vTaskSuspend(this->_taskHandle);
     }
     
-    bool Task::resume() 
+    void Task::resume() 
     {
         vTaskResume(this->_taskHandle);
     }

@@ -96,6 +96,12 @@ namespace freeRTOS
         virtual void taskMain() = 0;
 
         /**
+         * @brief Starts the task, if not already running.
+         * 
+         */
+        void start();
+
+        /**
          * @brief Gets the Task Name.
          * 
          * @return string The name of the task.
@@ -120,18 +126,14 @@ namespace freeRTOS
         /**
          * @brief Suspends the task.
          * 
-         * @return true Suspend successful
-         * @return false Suspend failed
          */
-        bool suspend();
+        void suspend();
 
         /**
          * @brief Resumes a suspended task.
          * 
-         * @return true 
-         * @return false 
          */
-        bool resume();
+        void resume();
 
 #endif
     };
