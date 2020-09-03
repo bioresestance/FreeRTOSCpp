@@ -1,16 +1,17 @@
 #pragma once
 
-#include <string>
+#include <string.h>
 #include <iostream>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-
-using std::string;
 
 namespace freeRTOS
 {
     class Task
     {
+    private:
+
+        bool isTaskStarted = false;
 
     protected:
         /****************************************************************************************************************/
@@ -34,7 +35,7 @@ namespace freeRTOS
         uint32_t _taskPriority;
 
         //! Holds the name of the task.
-        string _taskName;
+        char _taskName[64];
 
         //! Holds the Task Handle for the task.
         TaskHandle_t _taskHandle;
@@ -50,14 +51,14 @@ namespace freeRTOS
          * @param taskStackSize Stack Size to allocate for the task.
          * @param taskPriority Priority level for the task. 
          */
-        Task(string taskName, uint32_t taskStackSize, uint32_t taskPriority);
+        Task(const char* taskName, uint32_t taskStackSize, uint32_t taskPriority);
 
         /**
          * @brief Construct a new Task object with only a Name. Uses Default priority and stack size.
          * 
          * @param taskName Name of the FreeRTOS task.
          */
-        Task(string taskName);
+        Task(const char* taskName);
 
         /****************************************************************************************************************/
         /*                                           Task destructors                                                   */
@@ -106,7 +107,7 @@ namespace freeRTOS
          * 
          * @return string The name of the task.
          */
-        string getTaskName();
+        const char* getTaskName();
 
         /**
          * @brief Get the Task Priority.
@@ -122,7 +123,6 @@ namespace freeRTOS
          */
         uint32_t getTaskStackSize();
 
-#if INCLUDE_vTaskSuspend  
         /**
          * @brief Suspends the task.
          * 
@@ -135,7 +135,12 @@ namespace freeRTOS
          */
         void resume();
 
-#endif
+        /**
+         * @brief Delays the task by the number of provided milliseconds
+         * 
+         * @param ms Amount to delay, in ms.
+         */
+        void delay(uint32_t ms);
     };
 
 } // namespace freeRTOS
