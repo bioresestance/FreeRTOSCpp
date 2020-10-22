@@ -1,4 +1,5 @@
 #include <freertosTask.h>
+#include <esp_log.h>
 
 namespace freeRTOS
 { 
@@ -8,7 +9,7 @@ namespace freeRTOS
     {
         // Copy the tasks name for future use.
         strlcpy(_taskName, taskName, sizeof(_taskName));
-
+        ESP_LOGI("TASK", "Created task");
         // Create the task and suspend it right away so it doesn't start. Suspend scheduler while we create the task.
         vTaskSuspendAll();
         BaseType_t result = xTaskCreatePinnedToCore(taskHandler, taskName, taskStackSize, this, taskPriority, &_taskHandle, 1);
@@ -78,6 +79,16 @@ namespace freeRTOS
     void Task::delay(uint32_t ms) 
     {
         vTaskDelay(ms / portTICK_PERIOD_MS);
+    }
+    
+    TickType_t Task::getTickCount() 
+    {
+        return xTaskGetTickCount();
+    }
+    
+    uint32_t Task::getCurrentTimeMs() 
+    {
+        return pdTICKS_TO_MS(getTickCount());
     }
 
 

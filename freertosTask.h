@@ -19,10 +19,10 @@ namespace freeRTOS
         /****************************************************************************************************************/
 
         //! Default Task Stack size when there is not one provided.
-        static const uint32_t defaultStackSize = 2048;
+        static const uint32_t defaultStackSize = 2048 * 2;
 
         //! DEfault Tasks Priority when there is not one provided.
-        static const uint32_t defaultPriority = 1;
+        static const uint32_t defaultPriority = 5;
 
         /****************************************************************************************************************/
         /*                                           Task Common Variables                                              */
@@ -141,6 +141,21 @@ namespace freeRTOS
          * @param ms Amount to delay, in ms.
          */
         void delay(uint32_t ms);
+
+        /**
+         * @brief Get the current FreeRTOS Tick count since power on.
+         *  
+         * @return TickType_t Current Tick count.
+         */
+        static TickType_t getTickCount();
+
+
+        /**
+         * @brief Gets the current time in ms since power on.
+         * 
+         * @return uint32_t The current time, in ms.
+         */
+        static uint32_t getCurrentTimeMs();
     };
 
 } // namespace freeRTOS
